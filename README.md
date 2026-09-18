@@ -1,5 +1,8 @@
 # PeripheralBatteryPlugin
 
+[![Build](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/build.yml/badge.svg)](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/build.yml)
+[![CodeQL](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/codeql.yml)
+
 Plugin for [TrafficMonitor](https://github.com/zhongyang219/TrafficMonitor) (Windows, x64) that shows the battery
 level of peripheral devices as separate items in the taskbar:
 
@@ -108,6 +111,17 @@ Visual Studio 2022 or the Build Tools 2022 with the C++ workload (v143) and a Wi
 ```
 
 Output: `bin\x64\Release\PeripheralBatteryPlugin.dll` and `bin\x64\Release\tools\BatteryProbe.exe`.
+
+## Contributing
+
+Issues and pull requests are welcome – bug reports, fixes, support for more devices, translations.
+
+- **Bug reports:** please describe what the taskbar shows and attach the output of `BatteryProbe.exe --diag`.
+  It contains no addresses or device IDs (those only appear with `--include-sensitive`).
+- **Pull requests:** every pull request is built automatically (Debug and Release, warnings are errors) and
+  analyzed with CodeQL.
+- **New devices:** please don't guess protocol commands or Windows properties – new HID++ features or device
+  properties should come with a source (documentation or a capture of the device's traffic).
 
 ## License and sources
 

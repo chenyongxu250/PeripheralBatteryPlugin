@@ -1,0 +1,42 @@
+# Builds the solution on every push and pull request; the Release binaries are uploaded as an artifact.
+# windows-2022: Visual Studio 2022 17.14 with the v143 toolset (MSVC 14.44) and Windows SDK 10.0.26100 -
+# the same toolchain the releases are built with. (windows-latest already ships Visual Studio 2026.)
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  msbuild:
+    runs-on: windows-2022
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: microsoft/setup-msbuild@v3
+
+      - name: Build (${{ matrix.configuration }} x64, warnings are errors)
+        run: msbuild PeripheralBatteryPlugin.sln /p:Configuration=${{ matrix.configuration }} /p:Platform=x64 /m /nologo /v:minimal /warnaserror
+
+      - name: Upload binaries
+        if: matrix.configuration == 'Release'
+        uses: actions/upload-artifact@v7
+        with:
+          name: PeripheralBatteryPlugin-${{ github.sha }}
+          path: |
+            bin/x64/Release/PeripheralBatteryPlugin.dll
+            bin/x64/Release/tools/BatteryProbe.exe
+          if-no-files-found: error
