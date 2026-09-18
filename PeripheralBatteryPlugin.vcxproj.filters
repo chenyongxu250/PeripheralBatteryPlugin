@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{5B3C1E0A-6C2F-4B8E-9D7A-2F1E4C3B5A60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\battery">
+      <UniqueIdentifier>{2C7B4D3E-9F5A-4E1B-A8C6-5D4B7F6E8D93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\bluetooth">
+      <UniqueIdentifier>{4E9D6F5A-B17C-4A3D-8CE8-7F6D9B8A0FB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\config">
+      <UniqueIdentifier>{7B2A9C8D-E3AF-4D6A-AF1B-9C8A1EAD2BD7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hidpp">
+      <UniqueIdentifier>{6A1F8B7C-D29E-4C5F-9E0A-8B7F0D9C1AC6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\items">
+      <UniqueIdentifier>{8E4D2F1B-7A3C-4C9E-8B6D-3A2F5D4C6B71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\providers">
+      <UniqueIdentifier>{3D8C5E4F-A06B-4F2C-B9D7-6E5C8A7F9EA4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\utils">
+      <UniqueIdentifier>{8C3BAD9E-F4B0-4E7B-B02C-AD9B2FBE3CE8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ui">
+      <UniqueIdentifier>{9D4CBE0F-05C1-4F8C-A13D-BE0C3A0F4DF9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{1F6A3B2C-8D4E-4DAF-9C7E-4B3A6E5D7C82}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Plugin.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battery\BatteryManager.cpp">
+      <Filter>src\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battery\StatusFilter.cpp">
+      <Filter>src\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bluetooth\BluetoothScanner.cpp">
+      <Filter>src\bluetooth</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bluetooth\BluetoothWatcher.cpp">
+      <Filter>src\bluetooth</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hidpp\HidppListener.cpp">
+      <Filter>src\hidpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\config\Config.cpp">
+      <Filter>src\config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hidpp\HidDevice.cpp">
+      <Filter>src\hidpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hidpp\HidppDevice.cpp">
+      <Filter>src\hidpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hidpp\LogitechScanner.cpp">
+      <Filter>src\hidpp</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\BatteryItem.cpp">
+      <Filter>src\items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\HeadphonesBatteryItem.cpp">
+      <Filter>src\items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\items\MouseBatteryItem.cpp">
+      <Filter>src\items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\providers\LogitechHidppProvider.cpp">
+      <Filter>src\providers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\providers\WindowsBluetoothProvider.cpp">
+      <Filter>src\providers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\Logger.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils\UiNotifier.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\OptionsDialog.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\TrafficMonitor\PluginInterface.h">
+      <Filter>external</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Plugin.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battery\BatteryManager.h">
+      <Filter>src\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battery\BatteryStatus.h">
+      <Filter>src\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battery\IBatteryProvider.h">
+      <Filter>src\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battery\StatusFilter.h">
+      <Filter>src\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bluetooth\BluetoothScanner.h">
+      <Filter>src\bluetooth</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bluetooth\BluetoothWatcher.h">
+      <Filter>src\bluetooth</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\HidppListener.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\LinkRegistry.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config\Config.h">
+      <Filter>src\config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\HidDevice.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\HidppDevice.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\HidppProtocol.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hidpp\LogitechScanner.h">
+      <Filter>src\hidpp</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\BatteryItem.h">
+      <Filter>src\items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\HeadphonesBatteryItem.h">
+      <Filter>src\items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\items\MouseBatteryItem.h">
+      <Filter>src\items</Filter>
+    </ClInclude>
+    <ClInclude Include="src\providers\LogitechHidppProvider.h">
+      <Filter>src\providers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\providers\WindowsBluetoothProvider.h">
+      <Filter>src\providers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\Logger.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\UiNotifier.h">
+      <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\OptionsDialog.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Version.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PeripheralBatteryPlugin.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config\PeripheralBattery.ini" />
+  </ItemGroup>
+</Project>

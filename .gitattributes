@@ -1,0 +1,2 @@
+# Never treat UTF-16 files as text (no line-ending conversion)
+*.ini binary
