@@ -13,12 +13,14 @@ namespace
         return options.showCharging ? L"⚡100%" : L"100%";
     }
 
-    // Gap between label and value: one space, like the "M4 " in the default label,
-    // which TrafficMonitor draws without a separator of its own.
+    // Compact gap between label and value. A full font-space looked too wide next to short labels
+    // such as "MB:"; use half a space, and share it between width measurement and drawing.
     int GapWidth(HDC dc)
     {
         SIZE size{};
-        return GetTextExtentPoint32W(dc, L" ", 1, &size) ? size.cx : 0;
+        if (!GetTextExtentPoint32W(dc, L" ", 1, &size))
+            return 1;
+        return std::max(1, (size.cx + 1) / 2);
     }
 }
 
