@@ -20,7 +20,9 @@ namespace
         SIZE size{};
         if (!GetTextExtentPoint32W(dc, L" ", 1, &size))
             return 1;
-        return std::max(1, (size.cx + 1) / 2);
+        // SIZE::cx is LONG on Windows; convert explicitly to avoid std::max(LONG, int) ambiguity.
+        const int spaceWidth = static_cast<int>(size.cx);
+        return spaceWidth > 1 ? (spaceWidth + 1) / 2 : 1;
     }
 }
 
