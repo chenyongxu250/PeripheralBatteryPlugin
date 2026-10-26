@@ -13,14 +13,27 @@ namespace
         return options.showCharging ? L"⚡100%" : L"100%";
     }
 
-    // Compact gap between label and value. A full font-space looked too wide next to short labels
-    // such as "MB:"; use half a space, and share it between width measurement and drawing.
+    // Normalize punctuation from IMEs (full-width colon) and trim edge spaces, so the displayed
+    // label is consistently "MB:" rather than "MB：" or a label with an accidental trailing blank.
+    std::wstring NormalizeLabel(std::wstring label)
+    {
+        for (wchar_t& ch : label)
+        {
+            if (ch == L'：')
+                ch = L':';
+        }
+        const auto notSpace = [](wchar_t ch) { return ch != L' ' && ch != L'\\t'; };
+        label.erase(label.begin(), std::find_if(label.begin(), label.end(), notSpace));
+        label.erase(std::find_if(label.rbegin(), label.rend(), notSpace).base(), label.end());
+        return label;
+    }
+
+    // Compact but visible gap between the label and value.
     int GapWidth(HDC dc)
     {
         SIZE size{};
         if (!GetTextExtentPoint32W(dc, L" ", 1, &size))
             return 1;
-        // SIZE::cx is LONG on Windows; convert explicitly to avoid std::max(LONG, int) ambiguity.
         const int spaceWidth = static_cast<int>(size.cx);
         return spaceWidth > 1 ? (spaceWidth + 1) / 2 : 1;
     }
@@ -84,7 +97,7 @@ int BatteryItem::GetItemWidthEx(void* hDC) const
         if (dc == nullptr)
             return 0;
         const DisplayOptions options = manager_.GetDisplayOptions();
-        return MeasureWidth(dc, ReadLabel(options), SampleText(options));
+        return MeasureWidth(dc, NormalizeLabel(ReadLabel(options)), SampleText(options));
     }
     catch (...)
     {
@@ -107,7 +120,7 @@ void BatteryItem::DrawItem(void* hDC, int x, int y, int w, int h, bool dark_mode
         const COLORREF labelColor = drawContext_.taskbar && drawContext_.hasLabelColor ? drawContext_.labelColor : normal;
         const COLORREF valueColor = ToneColor(ToneFor(status, manager_.GetLowBatteryWarning()), normal, dark_mode);
         const RECT rect{ x, y, x + w, y + h };
-        DrawLabelValue(dc, rect, ReadLabel(options), labelColor, FormatValue(status, options), valueColor,
+        DrawLabelValue(dc, rect, NormalizeLabel(ReadLabel(options)), labelColor, FormatValue(status, options), valueColor,
             drawContext_.taskbar && drawContext_.valueRightAlign);
     }
     catch (...)
@@ -170,9 +183,13 @@ void BatteryItem::DrawLabelValue(HDC dc, const RECT& rect, const std::wstring& l
         RECT labelRect = rect;
         SetTextColor(dc, labelColor);
         DrawTextW(dc, label.c_str(), static_cast<int>(label.size()), &labelRect, DT_LEFT | kFlags);
-        SIZE size{};
-        GetTextExtentPoint32W(dc, label.c_str(), static_cast<int>(label.size()), &size);
-        valueRect.left = std::min(rect.right, rect.left + size.cx + GapWidth(dc));
+        // Use the same DrawTextW measurement as MeasureWidth to avoid an extra-looking gap
+        // caused by mixing GDI text metrics with DrawTextW's actual layout.
+        RECT labelBounds{};
+        DrawTextW(dc, label.c_str(), static_cast<int>(label.size()), &labelBounds,
+            DT_CALCRECT | DT_SINGLELINE | DT_NOPREFIX);
+        const int labelWidth = static_cast<int>(labelBounds.right - labelBounds.left);
+        valueRect.left = std::min(rect.right, rect.left + labelWidth + GapWidth(dc));
     }
     if (!value.empty())
     {
