@@ -1,7 +1,7 @@
 # PeripheralBatteryPlugin
 
-[![Build](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/build.yml/badge.svg)](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/build.yml)
-[![CodeQL](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/codeql.yml/badge.svg)](https://github.com/Ariazonaa/PeripheralBatteryPlugin/actions/workflows/codeql.yml)
+[![Build](https://github.com/chenyongxu250/PeripheralBatteryPlugin/actions/workflows/build.yml/badge.svg)](https://github.com/chenyongxu250/PeripheralBatteryPlugin/actions/workflows/build.yml)
+[![CodeQL](https://github.com/chenyongxu250/PeripheralBatteryPlugin/actions/workflows/codeql.yml/badge.svg)](https://github.com/chenyongxu250/PeripheralBatteryPlugin/actions/workflows/codeql.yml)
 
 Plugin for [TrafficMonitor](https://github.com/zhongyang219/TrafficMonitor) (Windows, x64) that shows the battery
 level of peripheral devices as separate items in the taskbar:
@@ -36,7 +36,7 @@ MOMENTUM 4's battery level in 10% steps.
 
 Requirements: Windows 10/11 (64-bit), TrafficMonitor 1.82 or later, 64-bit version (tested with 1.86).
 
-1. Download the zip from [Releases](https://github.com/Ariazonaa/PeripheralBatteryPlugin/releases).
+1. Open the [Build workflow](https://github.com/chenyongxu250/PeripheralBatteryPlugin/actions/workflows/build.yml) in this repository, open a successful run for the commit you want to test, and download its `PeripheralBatteryPlugin-<commit SHA>` artifact. Do not use the upstream Releases archive to test changes from this fork.
 2. Exit TrafficMonitor (right-click → Exit).
 3. Copy `PeripheralBatteryPlugin.dll` **directly** into the `plugins` folder next to `TrafficMonitor.exe`,
    e.g. `C:\Program Files\TrafficMonitor\plugins\` (no subfolder – TrafficMonitor only loads DLLs directly inside
