@@ -19,7 +19,7 @@ namespace
     {
         for (wchar_t& ch : label)
         {
-            if (ch == L'：')
+            if (ch == L'\\uFF1A')
                 ch = L':';
         }
         const auto notSpace = [](wchar_t ch) { return ch != L' ' && ch != L'\\t'; };
