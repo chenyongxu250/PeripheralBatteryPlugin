@@ -79,7 +79,6 @@ namespace
             + L", mouse " + device(c.mouse) + L", ShowDisconnected=" + std::to_wstring(c.display.showDisconnected)
             + L" ShowPercentSign=" + std::to_wstring(c.display.showPercentSign)
             + L" ShowCharging=" + std::to_wstring(c.display.showCharging)
-            + L" Colors=" + std::to_wstring(c.display.colors)
             + L" Label='" + c.display.headphonesLabel + L"'/'" + c.display.mouseLabel + L"'"
             + L" LowBatteryWarning=" + std::to_wstring(c.lowBatteryWarning)
             + L" VerboseLogging=" + std::to_wstring(c.verboseLogging);
