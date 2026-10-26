@@ -18,7 +18,9 @@ namespace
     int GapWidth(HDC dc)
     {
         SIZE size{};
-        return GetTextExtentPoint32W(dc, L" ", 1, &size) ? size.cx : 0;
+        if (!GetTextExtentPoint32W(dc, L" ", 1, &size))
+            return 1;
+        return std::max(1, (size.cx + 1) / 2);
     }
 }
 
