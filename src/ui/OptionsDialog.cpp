@@ -30,10 +30,9 @@ namespace
         int enabled;
         int provider;
         int name;
-        int label;
     };
-    constexpr DeviceControls kHeadphones{ IDC_HP_ENABLED, IDC_HP_PROVIDER, IDC_HP_NAME, IDC_HP_LABEL };
-    constexpr DeviceControls kMouse{ IDC_MS_ENABLED, IDC_MS_PROVIDER, IDC_MS_NAME, IDC_MS_LABEL };
+    constexpr DeviceControls kHeadphones{ IDC_HP_ENABLED, IDC_HP_PROVIDER, IDC_HP_NAME };
+    constexpr DeviceControls kMouse{ IDC_MS_ENABLED, IDC_MS_PROVIDER, IDC_MS_NAME };
 
     struct DialogState
     {
@@ -144,14 +143,11 @@ namespace
 
     void UpdateEnabling(HWND dialog)
     {
-        const bool colors = IsChecked(dialog, IDC_COLORS);
         for (const DeviceControls* controls : { &kHeadphones, &kMouse })
         {
             const bool enabled = IsChecked(dialog, controls->enabled);
             EnableWindow(GetDlgItem(dialog, controls->provider), enabled);
             EnableWindow(GetDlgItem(dialog, controls->name), enabled);
-            // Only the plugin itself draws the label (Colored); otherwise TrafficMonitor's label applies.
-            EnableWindow(GetDlgItem(dialog, controls->label), enabled && colors);
         }
     }
 
@@ -208,7 +204,6 @@ namespace
         SetDlgItemInt(dialog, IDC_LOW_WARNING, static_cast<UINT>(config.lowBatteryWarning), FALSE);
         SendDlgItemMessageW(dialog, IDC_INTERVAL, EM_LIMITTEXT, 4, 0);
         SendDlgItemMessageW(dialog, IDC_LOW_WARNING, EM_LIMITTEXT, 3, 0);
-        Check(dialog, IDC_COLORS, config.display.colors);
         Check(dialog, IDC_SHOW_PERCENT, config.display.showPercentSign);
         Check(dialog, IDC_SHOW_DISCONNECTED, config.display.showDisconnected);
         Check(dialog, IDC_SHOW_CHARGING, config.display.showCharging);
@@ -218,11 +213,10 @@ namespace
         {
             const DeviceControls& controls;
             const DeviceConfig& device;
-            const std::wstring& label;
             const std::wstring& detected;
         } devices[] = {
-            { kHeadphones, config.headphones, config.display.headphonesLabel, state.context->headphonesDetected },
-            { kMouse, config.mouse, config.display.mouseLabel, state.context->mouseDetected },
+            { kHeadphones, config.headphones, state.context->headphonesDetected },
+            { kMouse, config.mouse, state.context->mouseDetected },
         };
         for (const auto& d : devices)
         {
@@ -231,8 +225,6 @@ namespace
             SendDlgItemMessageW(dialog, d.controls.name, CB_LIMITTEXT, 100, 0);
             SetDlgItemTextW(dialog, d.controls.name, d.device.nameContains.c_str());
             FillSuggestions(dialog, state, d.controls, d.device, d.detected);
-            SendDlgItemMessageW(dialog, d.controls.label, EM_LIMITTEXT, 32, 0);
-            SetDlgItemTextW(dialog, d.controls.label, d.label.c_str());
         }
         UpdateEnabling(dialog);
         StartScan(dialog, *state.context);
@@ -265,23 +257,21 @@ namespace
         {
             return false;
         }
-        result.display.colors = IsChecked(dialog, IDC_COLORS);
         result.display.showPercentSign = IsChecked(dialog, IDC_SHOW_PERCENT);
         result.display.showDisconnected = IsChecked(dialog, IDC_SHOW_DISCONNECTED);
         result.display.showCharging = IsChecked(dialog, IDC_SHOW_CHARGING);
         result.verboseLogging = IsChecked(dialog, IDC_VERBOSE);
 
-        auto readDevice = [dialog, &state](const DeviceControls& controls, DeviceConfig& device, std::wstring& label) {
+        auto readDevice = [dialog, &state](const DeviceControls& controls, DeviceConfig& device) {
             device.enabled = IsChecked(dialog, controls.enabled);
             // Replace only if a different source is really selected ("windowsbluetooth" stays as it is).
             const std::wstring provider = SelectedProvider(dialog, state, controls);
             if (!SameId(device.provider, provider.c_str()))
                 device.provider = provider;
             device.nameContains = Trim(GetText(dialog, controls.name));
-            label = Trim(GetText(dialog, controls.label));
         };
-        readDevice(kHeadphones, result.headphones, result.display.headphonesLabel);
-        readDevice(kMouse, result.mouse, result.display.mouseLabel);
+        readDevice(kHeadphones, result.headphones);
+        readDevice(kMouse, result.mouse);
 
         if (result == state.context->config)
         {
@@ -333,7 +323,6 @@ namespace
                     break;
                 switch (LOWORD(wParam))
                 {
-                case IDC_COLORS:
                 case IDC_HP_ENABLED:
                 case IDC_MS_ENABLED:
                     if (HIWORD(wParam) == BN_CLICKED)

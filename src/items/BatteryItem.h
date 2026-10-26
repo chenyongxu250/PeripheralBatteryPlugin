@@ -32,7 +32,7 @@ public:
     const wchar_t* GetItemValueText() const override;
     const wchar_t* GetItemValueSampleText() const override;
 
-    // Colors=1: the item draws label and value itself (otherwise TrafficMonitor does).
+    // This colorless build always uses TrafficMonitor-native drawing for the label and value.
     bool IsCustomDraw() const override;
     int GetItemWidth() const override;
     int GetItemWidthEx(void* hDC) const override;

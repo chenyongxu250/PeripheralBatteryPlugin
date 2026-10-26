@@ -2,19 +2,16 @@
 
 #include <string>
 
-// Settings from PeripheralBattery.ini (Plan §32). Missing keys = default values.
-// Labels: with Colors=1 the plugin draws the item itself, and TrafficMonitor does not pass on its
-// label from the display settings in that case → Label= in [Headphones]/[Mouse].
-// With Colors=0 TrafficMonitor draws, and its label applies.
+// Settings from PeripheralBattery.ini. Missing keys = default values.
+// This colorless build uses TrafficMonitor-native drawing; labels and text colors are configured in TrafficMonitor.
 
 struct DisplayOptions
 {
     bool showDisconnected = true;   // "—" for a disconnected device, otherwise empty
     bool showPercentSign = true;    // "82%" instead of "82"
     bool showCharging = true;       // "⚡" while charging
-    bool colors = true;             // value red on low battery, green while charging (plugin draws itself)
-    std::wstring headphonesLabel = L"M4";
-    std::wstring mouseLabel = L"Mouse";
+    std::wstring headphonesLabel = L"M4"; // Legacy fallback; TrafficMonitor supplies the visible label.
+    std::wstring mouseLabel = L"Mouse";   // Legacy fallback; TrafficMonitor supplies the visible label.
 
     bool operator==(const DisplayOptions&) const = default;
 };

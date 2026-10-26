@@ -9,7 +9,7 @@
 IDR_DEFAULT_CONFIG RCDATA "config\\PeripheralBattery.ini"
 
 // Settings window (ITMPlugin::ShowOptionsDialog), logic in src/ui/OptionsDialog.cpp
-IDD_OPTIONS DIALOGEX 0, 0, 320, 250
+IDD_OPTIONS DIALOGEX 0, 0, 320, 238
 STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Peripheral Battery – Settings"
 FONT 9, "Segoe UI", 400, 0, 0x1
@@ -21,33 +21,26 @@ BEGIN
     LTEXT           "Warn at:", IDC_STATIC, 15, 38, 70, 8
     EDITTEXT        IDC_LOW_WARNING, 90, 36, 32, 12, ES_NUMBER | ES_AUTOHSCROLL
     LTEXT           "% battery (0 = no warning)", IDC_STATIC, 127, 38, 150, 8
-    AUTOCHECKBOX    "Colored: value red when the battery is low, green while charging", IDC_COLORS, 15, 54, 290, 10
-    AUTOCHECKBOX    "% sign", IDC_SHOW_PERCENT, 15, 69, 90, 10
-    AUTOCHECKBOX    "“—” when disconnected", IDC_SHOW_DISCONNECTED, 110, 69, 95, 10
-    AUTOCHECKBOX    "“⚡” while charging", IDC_SHOW_CHARGING, 210, 69, 95, 10
-    AUTOCHECKBOX    "Verbose log (every poll cycle)", IDC_VERBOSE, 15, 84, 290, 10
+    AUTOCHECKBOX    "% sign", IDC_SHOW_PERCENT, 15, 54, 90, 10
+    AUTOCHECKBOX    "“—” when disconnected", IDC_SHOW_DISCONNECTED, 110, 54, 95, 10
+    AUTOCHECKBOX    "“⚡” while charging", IDC_SHOW_CHARGING, 210, 54, 95, 10
+    AUTOCHECKBOX    "Verbose log (every poll cycle)", IDC_VERBOSE, 15, 69, 290, 10
 
-    GROUPBOX        "Headphones", IDC_STATIC, 7, 106, 150, 82
+    GROUPBOX        "Headphones", IDC_STATIC, 7, 106, 150, 66
     AUTOCHECKBOX    "Query device", IDC_HP_ENABLED, 15, 120, 130, 10
     LTEXT           "Source:", IDC_STATIC, 15, 137, 45, 8
     COMBOBOX        IDC_HP_PROVIDER, 62, 135, 88, 60, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Device:", IDC_STATIC, 15, 153, 45, 8
     COMBOBOX        IDC_HP_NAME, 62, 151, 88, 90, CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Label:", IDC_STATIC, 15, 169, 45, 8
-    EDITTEXT        IDC_HP_LABEL, 62, 167, 88, 12, ES_AUTOHSCROLL
-
-    GROUPBOX        "Mouse", IDC_STATIC, 163, 106, 150, 82
+    GROUPBOX        "Mouse", IDC_STATIC, 163, 106, 150, 66
     AUTOCHECKBOX    "Query device", IDC_MS_ENABLED, 171, 120, 130, 10
     LTEXT           "Source:", IDC_STATIC, 171, 137, 45, 8
     COMBOBOX        IDC_MS_PROVIDER, 218, 135, 88, 60, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Device:", IDC_STATIC, 171, 153, 45, 8
     COMBOBOX        IDC_MS_NAME, 218, 151, 88, 90, CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Label:", IDC_STATIC, 171, 169, 45, 8
-    EDITTEXT        IDC_MS_LABEL, 218, 167, 88, 12, ES_AUTOHSCROLL
-
-    LTEXT           "Device: part of the name; empty for Logitech = first device found. The label applies when “Colored” is on – otherwise set it in TrafficMonitor under “Display settings”.", IDC_HINT, 7, 194, 306, 26
-    DEFPUSHBUTTON   "OK", IDOK, 207, 228, 50, 14
-    PUSHBUTTON      "Cancel", IDCANCEL, 263, 228, 50, 14
+    LTEXT           "Device: part of the name; empty for Logitech = first device found. Set item labels and text colors in TrafficMonitor under Display Settings.", IDC_HINT, 7, 178, 306, 26
+    DEFPUSHBUTTON   "OK", IDOK, 207, 216, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 263, 216, 50, 14
 END
 
 VS_VERSION_INFO VERSIONINFO

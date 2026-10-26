@@ -25,9 +25,9 @@ M4 100%   Mouse 92%
 | `—` | not connected, switched off or asleep |
 | `?` | no value yet, or the device does not respond |
 
-The value turns **red** when the battery is at or below the warning threshold (default 15%) and **green** while
-charging. Hovering over the TrafficMonitor display shows a tooltip with the full device name, the value and the
-time of the reading.
+This build uses TrafficMonitor's native text rendering: values are not colored by the plugin. Set item labels and
+text colors in TrafficMonitor's **Display Settings**. Hovering over the display shows a tooltip with the full device
+name, the value and the time of the reading.
 
 For mice that only report their voltage (e.g. G502 LIGHTSPEED) the percentage is an estimate. Windows reports the
 MOMENTUM 4's battery level in 10% steps.
@@ -61,17 +61,13 @@ start; it explains every setting and can also be edited directly:
 | | `ShowDisconnected` | `1` | `—` for a disconnected device (`0` = empty) |
 | | `ShowPercentSign` | `1` | `82%` (`0` = `82`) |
 | | `ShowCharging` | `1` | `⚡` while charging |
-| | `LowBatteryWarning` | `15` | notification and red value at or below this level (`0` = off) |
-| | `Colors` | `1` | red/green value; `0` = TrafficMonitor draws the item without colors |
+| | `LowBatteryWarning` | `15` | notification at or below this level (`0` = off) |
 | | `VerboseLogging` | `0` | `1` = write every poll cycle to the log |
 | `[Headphones]`, `[Mouse]` | `Enabled` | `1` | query the device |
 | | `Provider` | `WindowsBluetooth` / `LogitechHidpp` | data source |
 | | `NameContains` | `MOMENTUM 4` / empty | part of the device name. Empty: the first Logitech device with a battery, or the first connected Bluetooth device with a battery level |
-| | `Label` | `M4` / `Mouse` | label in front of the value |
-
-With `Colors=1` the plugin draws the item itself. TrafficMonitor does not pass its own label from the display
-settings to self-drawing plugins, so `Label` applies. With `Colors=0` the label from TrafficMonitor's display
-settings applies.
+Legacy `Colors` and `Label` entries in an existing INI are not used by this build; the obsolete `Colors` key is
+deleted the next time settings are saved. Configure labels and text colors in TrafficMonitor's **Display Settings**.
 
 For other Bluetooth headphones, enter part of their name under "Device" / `NameContains` – provided Windows
 knows their battery level (Settings → Bluetooth & devices).

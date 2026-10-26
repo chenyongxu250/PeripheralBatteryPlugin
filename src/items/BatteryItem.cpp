@@ -72,14 +72,8 @@ const wchar_t* BatteryItem::GetItemValueSampleText() const
 
 bool BatteryItem::IsCustomDraw() const
 {
-    try
-    {
-        return manager_.GetDisplayOptions().colors;
-    }
-    catch (...)
-    {
-        return false;
-    }
+    // This build always lets TrafficMonitor draw the item using its own label and text color.
+    return false;
 }
 
 int BatteryItem::GetItemWidth() const
@@ -97,7 +91,8 @@ int BatteryItem::GetItemWidthEx(void* hDC) const
         if (dc == nullptr)
             return 0;
         const DisplayOptions options = manager_.GetDisplayOptions();
-        return MeasureWidth(dc, NormalizeLabel(ReadLabel(options)), SampleText(options));
+        // TrafficMonitor renders the label itself; reserve width only for the battery value.
+        return MeasureWidth(dc, L"", SampleText(options));
     }
     catch (...)
     {

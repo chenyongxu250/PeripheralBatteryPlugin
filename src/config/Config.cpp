@@ -64,7 +64,6 @@ Config LoadConfig(const std::wstring& path)
     config.display.showDisconnected = ReadBool(path, L"General", L"ShowDisconnected", defaults.display.showDisconnected);
     config.display.showPercentSign = ReadBool(path, L"General", L"ShowPercentSign", defaults.display.showPercentSign);
     config.display.showCharging = ReadBool(path, L"General", L"ShowCharging", defaults.display.showCharging);
-    config.display.colors = ReadBool(path, L"General", L"Colors", defaults.display.colors);
     config.display.headphonesLabel = ReadString(path, L"Headphones", L"Label", defaults.display.headphonesLabel);
     config.display.mouseLabel = ReadString(path, L"Mouse", L"Label", defaults.display.mouseLabel);
     config.verboseLogging = ReadBool(path, L"General", L"VerboseLogging", defaults.verboseLogging);
@@ -87,7 +86,6 @@ int AddMissingKeys(const std::wstring& path)
         { L"General", L"ShowPercentSign", L"1" },
         { L"General", L"ShowCharging", L"1" },
         { L"General", L"LowBatteryWarning", L"15" },
-        { L"General", L"Colors", L"1" },
         { L"General", L"VerboseLogging", L"0" },
         { L"Headphones", L"Label", L"M4" },
         { L"Mouse", L"Label", L"Mouse" },
@@ -211,6 +209,13 @@ bool SaveConfig(const std::wstring& path, const Config& config, std::wstring& er
         return false;
     }
 
+    // Remove the obsolete key from existing INI files; this build has no color mode.
+    if (!WritePrivateProfileStringW(L"General", L"Colors", nullptr, path.c_str()))
+    {
+        error = ErrorText(GetLastError());
+        return false;
+    }
+
     auto flag = [](bool value) { return std::wstring(value ? L"1" : L"0"); };
     struct Entry { const wchar_t* section; const wchar_t* key; std::wstring value; };
     const Entry entries[] = {
@@ -219,7 +224,6 @@ bool SaveConfig(const std::wstring& path, const Config& config, std::wstring& er
         { L"General", L"ShowPercentSign", flag(config.display.showPercentSign) },
         { L"General", L"ShowCharging", flag(config.display.showCharging) },
         { L"General", L"LowBatteryWarning", std::to_wstring(config.lowBatteryWarning) },
-        { L"General", L"Colors", flag(config.display.colors) },
         { L"General", L"VerboseLogging", flag(config.verboseLogging) },
         { L"Headphones", L"Enabled", flag(config.headphones.enabled) },
         { L"Headphones", L"Provider", config.headphones.provider },
