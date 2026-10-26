@@ -19,10 +19,10 @@ namespace
     {
         for (wchar_t& ch : label)
         {
-            if (ch == L'\\uFF1A')
+            if (ch == L'\uFF1A')
                 ch = L':';
         }
-        const auto notSpace = [](wchar_t ch) { return ch != L' ' && ch != L'\\t'; };
+        const auto notSpace = [](wchar_t ch) { return ch != L' ' && ch != L'\t'; };
         label.erase(label.begin(), std::find_if(label.begin(), label.end(), notSpace));
         label.erase(std::find_if(label.rbegin(), label.rend(), notSpace).base(), label.end());
         return label;
